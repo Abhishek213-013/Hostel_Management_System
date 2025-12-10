@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Floor extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'floor_number',
+        'created_id',
+    ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_id');
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+}
