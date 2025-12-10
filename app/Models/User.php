@@ -17,6 +17,7 @@ class User extends Authenticatable
         'phone',
         'address',
         'role_id',
+        'branch_id', // Add this
         'created_id',
     ];
 
@@ -33,6 +34,7 @@ class User extends Authenticatable
         ];
     }
 
+    // Relationships
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -43,6 +45,13 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'created_id');
     }
 
+    // Add branch relationship
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    // Existing relationships
     public function branches()
     {
         return $this->hasMany(Branch::class, 'created_id');
@@ -103,3 +112,5 @@ class User extends Authenticatable
         return $this->hasMany(InventoryFloor::class, 'created_id');
     }
 }
+
+

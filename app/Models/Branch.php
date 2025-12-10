@@ -32,4 +32,18 @@ class Branch extends Model
     {
         return $this->hasManyThrough(Floor::class, Room::class);
     }
+
+    // Add users relationship
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    // Add branch managers relationship (users with Branch Manager role)
+    public function managers()
+    {
+        return $this->users()->whereHas('role', function($query) {
+            $query->where('name', 'Branch Manager');
+        });
+    }
 }

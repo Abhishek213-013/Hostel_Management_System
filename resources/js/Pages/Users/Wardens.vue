@@ -1,11 +1,11 @@
 <template>
-    <Head title="Super Admins Management" />
+    <Head title="Wardens Management" />
 
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Super Admins Management
+                    Wardens Management
                 </h2>
                 <div class="text-sm text-gray-500">
                     {{ currentDate }}
@@ -22,9 +22,9 @@
                             Users
                         </Link>
                         <span class="text-gray-400">/</span>
-                        <h1 class="text-2xl font-bold text-gray-900">Super Admins</h1>
+                        <h1 class="text-2xl font-bold text-gray-900">Wardens</h1>
                     </div>
-                    <p class="text-gray-600 mt-2">Manage super administrator accounts with full system access</p>
+                    <p class="text-gray-600 mt-2">Manage warden accounts for hostel supervision</p>
                 </div>
 
                 <!-- Flash Messages -->
@@ -51,12 +51,12 @@
                     <div></div> <!-- Spacer -->
                     <button 
                         @click="showCreateModal = true"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full flex items-center justify-center space-x-2 transition-all duration-200 w-full lg:w-auto text-sm lg:text-base shadow-md hover:shadow-lg active:scale-95"
+                        class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-full flex items-center justify-center space-x-2 transition-all duration-200 w-full lg:w-auto text-sm lg:text-base shadow-md hover:shadow-lg active:scale-95"
                     >
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
-                        <span class="font-medium">Add Super Admin</span>
+                        <span class="font-medium">Add Warden</span>
                     </button>
                 </div>
 
@@ -65,12 +65,12 @@
                     <div class="bg-white rounded-lg shadow border border-gray-200 p-4 hover:shadow-md transition-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h3 class="text-sm font-medium text-gray-600">Total Super Admins</h3>
-                                <p class="text-2xl font-bold text-gray-900 mt-1">{{ superAdmins.length }}</p>
+                                <h3 class="text-sm font-medium text-gray-600">Total Wardens</h3>
+                                <p class="text-2xl font-bold text-yellow-600 mt-1">{{ users.length }}</p>
                             </div>
-                            <div class="p-2 bg-blue-100 rounded-lg">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                            <div class="p-2 bg-yellow-100 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                                 </svg>
                             </div>
                         </div>
@@ -79,8 +79,8 @@
                     <div class="bg-white rounded-lg shadow border border-gray-200 p-4 hover:shadow-md transition-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h3 class="text-sm font-medium text-gray-600">Active Today</h3>
-                                <p class="text-2xl font-bold text-gray-900 mt-1">{{ stats?.activeToday || 0 }}</p>
+                                <h3 class="text-sm font-medium text-gray-600">Active Duty</h3>
+                                <p class="text-2xl font-bold text-green-600 mt-1">{{ stats?.activeDuty || 0 }}</p>
                             </div>
                             <div class="p-2 bg-green-100 rounded-lg">
                                 <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,12 +93,12 @@
                     <div class="bg-white rounded-lg shadow border border-gray-200 p-4 hover:shadow-md transition-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h3 class="text-sm font-medium text-gray-600">Last 7 Days</h3>
-                                <p class="text-2xl font-bold text-gray-900 mt-1">{{ stats?.last7Days || 0 }}</p>
+                                <h3 class="text-sm font-medium text-gray-600">Hostels Managed</h3>
+                                <p class="text-2xl font-bold text-blue-600 mt-1">{{ stats?.hostelsManaged || 0 }}</p>
                             </div>
-                            <div class="p-2 bg-purple-100 rounded-lg">
-                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            <div class="p-2 bg-blue-100 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                             </div>
                         </div>
@@ -107,12 +107,12 @@
                     <div class="bg-white rounded-lg shadow border border-gray-200 p-4 hover:shadow-md transition-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h3 class="text-sm font-medium text-gray-600">System Access</h3>
-                                <p class="text-2xl font-bold text-gray-900 mt-1">Full</p>
+                                <h3 class="text-sm font-medium text-gray-600">Residents Supervised</h3>
+                                <p class="text-2xl font-bold text-purple-600 mt-1">{{ stats?.residentsSupervised || 0 }}</p>
                             </div>
-                            <div class="p-2 bg-orange-100 rounded-lg">
-                                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            <div class="p-2 bg-purple-100 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
                                 </svg>
                             </div>
                         </div>
@@ -123,13 +123,13 @@
                 <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden mb-8">
                     <div class="px-4 lg:px-6 py-4 border-b border-gray-200">
                         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
-                            <h3 class="text-base lg:text-lg font-semibold text-gray-800">Super Administrators</h3>
+                            <h3 class="text-base lg:text-lg font-semibold text-gray-800">Wardens</h3>
                             <div class="relative w-full lg:w-auto">
                                 <input 
                                     type="text" 
                                     v-model="searchQuery"
-                                    placeholder="Search super admins..." 
-                                    class="w-full lg:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                    placeholder="Search wardens..." 
+                                    class="w-full lg:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                 >
                                 <svg class="w-4 h-4 lg:w-5 lg:h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -140,9 +140,9 @@
 
                     <!-- Mobile Card View -->
                     <div class="lg:hidden divide-y divide-gray-200">
-                        <div v-for="user in filteredSuperAdmins" :key="user.id" class="p-4 hover:bg-gray-50">
+                        <div v-for="user in filteredUsers" :key="user.id" class="p-4 hover:bg-gray-50">
                             <div class="flex items-start space-x-3 mb-3">
-                                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <div class="w-10 h-10 bg-yellow-600 rounded-full flex items-center justify-center flex-shrink-0">
                                     <span class="text-white text-sm font-semibold">
                                         {{ getUserInitials(user.name) }}
                                     </span>
@@ -155,7 +155,8 @@
                             </div>
                             
                             <div class="space-y-2 text-sm text-gray-600 mb-3">
-                                <div v-if="user.address"><strong>Address:</strong> {{ user.address }}</div>
+                                <div v-if="user.hostel"><strong>Hostel:</strong> {{ user.hostel.name }}</div>
+                                <div v-if="user.shift"><strong>Shift:</strong> {{ formatShift(user.shift) }}</div>
                                 <div><strong>Joined:</strong> {{ formatDate(user.created_at) }}</div>
                             </div>
                             
@@ -165,18 +166,18 @@
                                 </span>
                                 <div class="flex space-x-2">
                                     <button 
-                                        @click="editSuperAdmin(user)"
+                                        @click="editUser(user)"
                                         class="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-50"
-                                        title="Edit Super Admin"
+                                        title="Edit Warden"
                                     >
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
                                     </button>
                                     <button 
-                                        @click="deleteSuperAdmin(user)"
+                                        @click="deleteUser(user)"
                                         class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-50"
-                                        title="Delete Super Admin"
+                                        title="Delete Warden"
                                     >
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -192,18 +193,18 @@
                         <table class="w-full">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Warden</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hostel & Shift</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="user in filteredSuperAdmins" :key="user.id" class="hover:bg-gray-50">
+                                <tr v-for="user in filteredUsers" :key="user.id" class="hover:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                            <div class="w-10 h-10 bg-yellow-600 rounded-full flex items-center justify-center">
                                                 <span class="text-white text-sm font-semibold">
                                                     {{ getUserInitials(user.name) }}
                                                 </span>
@@ -219,7 +220,8 @@
                                         <div class="text-sm text-gray-500">{{ user.phone || 'N/A' }}</div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900 max-w-xs truncate">{{ user.address || 'N/A' }}</div>
+                                        <div class="text-sm text-gray-900">{{ user.hostel?.name || 'Unassigned' }}</div>
+                                        <div class="text-sm text-gray-500">{{ formatShift(user.shift) }}</div>
                                         <div class="text-sm text-gray-500">Joined: {{ formatDate(user.created_at) }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -230,18 +232,18 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center space-x-3">
                                             <button 
-                                                @click="editSuperAdmin(user)"
+                                                @click="editUser(user)"
                                                 class="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-50 transition-colors"
-                                                title="Edit Super Admin"
+                                                title="Edit Warden"
                                             >
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                 </svg>
                                             </button>
                                             <button 
-                                                @click="deleteSuperAdmin(user)"
+                                                @click="deleteUser(user)"
                                                 class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-50 transition-colors"
-                                                title="Delete Super Admin"
+                                                title="Delete Warden"
                                             >
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -255,29 +257,29 @@
                     </div>
 
                     <!-- Empty State -->
-                    <div v-if="filteredSuperAdmins.length === 0" class="text-center py-8 lg:py-12">
+                    <div v-if="filteredUsers.length === 0" class="text-center py-8 lg:py-12">
                         <svg class="w-12 h-12 lg:w-16 lg:h-16 text-gray-400 mx-auto mb-3 lg:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
-                        <h3 class="text-base lg:text-lg font-medium text-gray-900 mb-2">No super admins found</h3>
-                        <p class="text-gray-500 text-sm lg:text-base mb-4">Get started by creating your first super administrator.</p>
+                        <h3 class="text-base lg:text-lg font-medium text-gray-900 mb-2">No wardens found</h3>
+                        <p class="text-gray-500 text-sm lg:text-base mb-4">Get started by creating your first warden.</p>
                         <button 
                             @click="showCreateModal = true"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full transition-colors text-sm lg:text-base shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                            class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-full transition-colors text-sm lg:text-base shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
                         >
-                            Add Super Admin
+                            Add Warden
                         </button>
                     </div>
                 </div>
 
-                <!-- Create Super Admin Modal -->
+                <!-- Create Warden Modal -->
                 <div v-if="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-2">
                         <div class="px-4 lg:px-6 py-4 border-b border-gray-200">
-                            <h3 class="text-lg font-semibold text-gray-800">Create New Super Admin</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">Create New Warden</h3>
                         </div>
 
-                        <form @submit.prevent="createSuperAdmin" class="p-4 lg:p-6 space-y-4">
+                        <form @submit.prevent="createUser" class="p-4 lg:p-6 space-y-4">
                             <!-- Personal Information -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -286,7 +288,7 @@
                                         v-model="form.name"
                                         type="text" 
                                         required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter full name"
                                         :class="{ 'border-red-300': form.errors.name }"
                                     >
@@ -298,7 +300,7 @@
                                         v-model="form.email"
                                         type="email" 
                                         required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter email address"
                                         :class="{ 'border-red-300': form.errors.email }"
                                     >
@@ -312,35 +314,57 @@
                                     <input 
                                         v-model="form.phone"
                                         type="tel" 
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter phone number"
                                         :class="{ 'border-red-300': form.errors.phone }"
                                     >
                                     <div v-if="form.errors.phone" class="text-red-500 text-sm mt-1">{{ form.errors.phone }}</div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-                                    <input 
-                                        v-model="form.dob"
-                                        type="date" 
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
-                                        :class="{ 'border-red-300': form.errors.dob }"
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Assigned Hostel *</label>
+                                    <select 
+                                        v-model="form.hostel_id"
+                                        required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
+                                        :class="{ 'border-red-300': form.errors.hostel_id }"
                                     >
-                                    <div v-if="form.errors.dob" class="text-red-500 text-sm mt-1">{{ form.errors.dob }}</div>
+                                        <option value="">Select Hostel</option>
+                                        <option v-for="hostel in hostels" :key="hostel.id" :value="hostel.id">
+                                            {{ hostel.name }}
+                                        </option>
+                                    </select>
+                                    <div v-if="form.errors.hostel_id" class="text-red-500 text-sm mt-1">{{ form.errors.hostel_id }}</div>
                                 </div>
                             </div>
 
-                            <!-- Address Information -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                                <textarea 
-                                    v-model="form.address"
-                                    rows="3"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
-                                    placeholder="Enter full address"
-                                    :class="{ 'border-red-300': form.errors.address }"
-                                ></textarea>
-                                <div v-if="form.errors.address" class="text-red-500 text-sm mt-1">{{ form.errors.address }}</div>
+                            <!-- Shift Information -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Shift Timing *</label>
+                                    <select 
+                                        v-model="form.shift"
+                                        required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
+                                        :class="{ 'border-red-300': form.errors.shift }"
+                                    >
+                                        <option value="">Select Shift</option>
+                                        <option value="morning">Morning (6AM - 2PM)</option>
+                                        <option value="evening">Evening (2PM - 10PM)</option>
+                                        <option value="night">Night (10PM - 6AM)</option>
+                                    </select>
+                                    <div v-if="form.errors.shift" class="text-red-500 text-sm mt-1">{{ form.errors.shift }}</div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                    <textarea 
+                                        v-model="form.address"
+                                        rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
+                                        placeholder="Enter full address"
+                                        :class="{ 'border-red-300': form.errors.address }"
+                                    ></textarea>
+                                    <div v-if="form.errors.address" class="text-red-500 text-sm mt-1">{{ form.errors.address }}</div>
+                                </div>
                             </div>
 
                             <!-- Password -->
@@ -351,7 +375,7 @@
                                         v-model="form.password"
                                         type="password" 
                                         required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter password"
                                         :class="{ 'border-red-300': form.errors.password }"
                                     >
@@ -363,19 +387,19 @@
                                         v-model="form.password_confirmation"
                                         type="password" 
                                         required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Confirm password"
                                     >
                                 </div>
                             </div>
 
                             <!-- Role Information -->
-                            <div class="p-4 bg-blue-50 rounded-lg">
+                            <div class="p-4 bg-yellow-50 rounded-lg">
                                 <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <span class="text-sm text-blue-700">This user will be created as a <strong>Super Admin</strong> with full system access.</span>
+                                    <span class="text-sm text-yellow-700">This user will be created as a <strong>Warden</strong> with hostel supervision access.</span>
                                 </div>
                             </div>
 
@@ -391,23 +415,23 @@
                                 <button 
                                     type="submit"
                                     :disabled="form.processing"
-                                    class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-sm lg:text-base order-1 sm:order-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                                    class="px-6 py-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-sm lg:text-base order-1 sm:order-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
                                 >
-                                    {{ form.processing ? 'Creating...' : 'Create Super Admin' }}
+                                    {{ form.processing ? 'Creating...' : 'Create Warden' }}
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <!-- Edit Super Admin Modal -->
+                <!-- Edit Warden Modal -->
                 <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-2">
                         <div class="px-4 lg:px-6 py-4 border-b border-gray-200">
-                            <h3 class="text-lg font-semibold text-gray-800">Edit Super Admin</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">Edit Warden</h3>
                         </div>
 
-                        <form @submit.prevent="updateSuperAdmin" class="p-4 lg:p-6 space-y-4">
+                        <form @submit.prevent="updateUser" class="p-4 lg:p-6 space-y-4">
                             <!-- Personal Information -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -416,7 +440,7 @@
                                         v-model="editForm.name"
                                         type="text" 
                                         required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter full name"
                                         :class="{ 'border-red-300': editForm.errors.name }"
                                     >
@@ -428,7 +452,7 @@
                                         v-model="editForm.email"
                                         type="email" 
                                         required
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter email address"
                                         :class="{ 'border-red-300': editForm.errors.email }"
                                     >
@@ -442,35 +466,57 @@
                                     <input 
                                         v-model="editForm.phone"
                                         type="tel" 
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter phone number"
                                         :class="{ 'border-red-300': editForm.errors.phone }"
                                     >
                                     <div v-if="editForm.errors.phone" class="text-red-500 text-sm mt-1">{{ editForm.errors.phone }}</div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-                                    <input 
-                                        v-model="editForm.dob"
-                                        type="date" 
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
-                                        :class="{ 'border-red-300': editForm.errors.dob }"
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Assigned Hostel *</label>
+                                    <select 
+                                        v-model="editForm.hostel_id"
+                                        required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
+                                        :class="{ 'border-red-300': editForm.errors.hostel_id }"
                                     >
-                                    <div v-if="editForm.errors.dob" class="text-red-500 text-sm mt-1">{{ editForm.errors.dob }}</div>
+                                        <option value="">Select Hostel</option>
+                                        <option v-for="hostel in hostels" :key="hostel.id" :value="hostel.id">
+                                            {{ hostel.name }}
+                                        </option>
+                                    </select>
+                                    <div v-if="editForm.errors.hostel_id" class="text-red-500 text-sm mt-1">{{ editForm.errors.hostel_id }}</div>
                                 </div>
                             </div>
 
-                            <!-- Address Information -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                                <textarea 
-                                    v-model="editForm.address"
-                                    rows="3"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
-                                    placeholder="Enter full address"
-                                    :class="{ 'border-red-300': editForm.errors.address }"
-                                ></textarea>
-                                <div v-if="editForm.errors.address" class="text-red-500 text-sm mt-1">{{ editForm.errors.address }}</div>
+                            <!-- Shift Information -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Shift Timing *</label>
+                                    <select 
+                                        v-model="editForm.shift"
+                                        required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
+                                        :class="{ 'border-red-300': editForm.errors.shift }"
+                                    >
+                                        <option value="">Select Shift</option>
+                                        <option value="morning">Morning (6AM - 2PM)</option>
+                                        <option value="evening">Evening (2PM - 10PM)</option>
+                                        <option value="night">Night (10PM - 6AM)</option>
+                                    </select>
+                                    <div v-if="editForm.errors.shift" class="text-red-500 text-sm mt-1">{{ editForm.errors.shift }}</div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                    <textarea 
+                                        v-model="editForm.address"
+                                        rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
+                                        placeholder="Enter full address"
+                                        :class="{ 'border-red-300': editForm.errors.address }"
+                                    ></textarea>
+                                    <div v-if="editForm.errors.address" class="text-red-500 text-sm mt-1">{{ editForm.errors.address }}</div>
+                                </div>
                             </div>
 
                             <!-- Password (Optional for edit) -->
@@ -480,7 +526,7 @@
                                     <input 
                                         v-model="editForm.password"
                                         type="password" 
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Enter new password"
                                         :class="{ 'border-red-300': editForm.errors.password }"
                                     >
@@ -491,19 +537,19 @@
                                     <input 
                                         v-model="editForm.password_confirmation"
                                         type="password" 
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm lg:text-base"
                                         placeholder="Confirm new password"
                                     >
                                 </div>
                             </div>
 
                             <!-- Role Information -->
-                            <div class="p-4 bg-blue-50 rounded-lg">
+                            <div class="p-4 bg-yellow-50 rounded-lg">
                                 <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                                     </svg>
-                                    <span class="text-sm text-blue-700">This user is a <strong>Super Admin</strong> with full system access.</span>
+                                    <span class="text-sm text-yellow-700">This user is a <strong>Warden</strong> with hostel supervision access.</span>
                                 </div>
                             </div>
 
@@ -519,9 +565,9 @@
                                 <button 
                                     type="submit"
                                     :disabled="editForm.processing"
-                                    class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-sm lg:text-base order-1 sm:order-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                                    class="px-6 py-3 bg-yellow-600 text-white rounded-full hover:bg-yellow-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-sm lg:text-base order-1 sm:order-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
                                 >
-                                    {{ editForm.processing ? 'Updating...' : 'Update Super Admin' }}
+                                    {{ editForm.processing ? 'Updating...' : 'Update Warden' }}
                                 </button>
                             </div>
                         </form>
@@ -540,7 +586,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 
 // Props from Laravel backend
 const props = defineProps({
-    superAdmins: {
+    users: {
         type: Array,
         default: () => []
     },
@@ -551,6 +597,10 @@ const props = defineProps({
     flash: {
         type: Object,
         default: () => ({})
+    },
+    hostels: {
+        type: Array,
+        default: () => []
     }
 })
 
@@ -575,11 +625,12 @@ const form = useForm({
     name: '',
     email: '',
     phone: '',
-    dob: '',
     address: '',
+    hostel_id: '',
+    shift: '',
     password: '',
     password_confirmation: '',
-    role_id: null // This should be set to Admin role ID
+    role_id: null // This should be set to Warden role ID
 })
 
 const editForm = useForm({
@@ -587,29 +638,30 @@ const editForm = useForm({
     name: '',
     email: '',
     phone: '',
-    dob: '',
     address: '',
+    hostel_id: '',
+    shift: '',
     password: '',
     password_confirmation: ''
 })
 
 // Computed properties
-const filteredSuperAdmins = computed(() => {
-    if (!searchQuery.value) return props.superAdmins
+const filteredUsers = computed(() => {
+    if (!searchQuery.value) return props.users
   
     const query = searchQuery.value.toLowerCase()
-    return props.superAdmins.filter(user => 
+    return props.users.filter(user => 
         user.name?.toLowerCase().includes(query) ||
         user.email?.toLowerCase().includes(query) ||
         user.phone?.toLowerCase().includes(query) ||
-        user.address?.toLowerCase().includes(query)
+        user.hostel?.name?.toLowerCase().includes(query)
     )
 })
 
 // Methods
-const createSuperAdmin = () => {
-    // Set role_id to Admin role (you need to get this from props or API)
-    form.role_id = 1; // Assuming Admin role has ID 1
+const createUser = () => {
+    // Set role_id to Warden role (you need to get this from props or API)
+    form.role_id = 4; // Assuming Warden role has ID 4
     
     form.post('/users', {
         preserveScroll: true,
@@ -620,20 +672,21 @@ const createSuperAdmin = () => {
     })
 }
 
-const editSuperAdmin = (user) => {
+const editUser = (user) => {
     editingUser.value = user
     editForm.id = user.id
     editForm.name = user.name
     editForm.email = user.email
     editForm.phone = user.phone || ''
-    editForm.dob = user.dob ? user.dob.split('T')[0] : '' // Format date for input
     editForm.address = user.address || ''
+    editForm.hostel_id = user.hostel_id || ''
+    editForm.shift = user.shift || ''
     editForm.password = ''
     editForm.password_confirmation = ''
     showEditModal.value = true
 }
 
-const updateSuperAdmin = () => {
+const updateUser = () => {
     if (!editingUser.value) return
   
     // Only include password if it's provided
@@ -652,7 +705,7 @@ const updateSuperAdmin = () => {
     })
 }
 
-const deleteSuperAdmin = (user) => {
+const deleteUser = (user) => {
     if (confirm(`Are you sure you want to delete ${user.name}? This action cannot be undone.`)) {
         router.delete(`/users/${user.id}`, {
             preserveScroll: true,
@@ -675,7 +728,7 @@ const closeEditModal = () => {
 
 // Helper functions
 const getUserInitials = (name) => {
-    if (!name) return 'SA'
+    if (!name) return 'WD'
     return name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0, 2)
 }
 
@@ -686,6 +739,15 @@ const formatDate = (dateString) => {
         month: 'short',
         day: 'numeric'
     })
+}
+
+const formatShift = (shift) => {
+    switch(shift) {
+        case 'morning': return 'Morning (6AM - 2PM)'
+        case 'evening': return 'Evening (2PM - 10PM)'
+        case 'night': return 'Night (10PM - 6AM)'
+        default: return 'Not assigned'
+    }
 }
 </script>
 
@@ -775,4 +837,3 @@ button:active {
     transition-duration: 150ms;
 }
 </style>
-

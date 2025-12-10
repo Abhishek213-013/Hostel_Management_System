@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -6,7 +7,7 @@ use App\Http\Controllers\Settings\TypeConfigurationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -218,7 +219,7 @@ Route::prefix('users')->middleware(['auth'])->group(function () {
     // Role-specific pages
     Route::get('/super-admins', function () {
         return Inertia::render('Users/SuperAdmins', [
-            'users' => \App\Models\User::whereHas('role', function($query) {
+            'superAdmins' => \App\Models\User::whereHas('role', function($query) {
                 $query->where('name', 'Admin');
             })->with(['role'])->latest()->get(),
             'stats' => [
@@ -229,13 +230,7 @@ Route::prefix('users')->middleware(['auth'])->group(function () {
         ]);
     })->name('users.super-admins');
 
-    Route::get('/branch-managers', function () {
-        return Inertia::render('Users/BranchManagers', [
-            'users' => \App\Models\User::whereHas('role', function($query) {
-                $query->where('name', 'Branch Manager');
-            })->with(['role'])->latest()->get()
-        ]);
-    })->name('users.branch-managers');
+    Route::get('/branch-managers', [UserController::class, 'branchManagers'])->name('users.branch-managers');
 
     Route::get('/accountants', function () {
         return Inertia::render('Users/Accountants', [
@@ -270,23 +265,30 @@ Route::prefix('users')->middleware(['auth'])->group(function () {
     // Create user page
     Route::get('/create', function () {
         return Inertia::render('Users/Create', [
-            'roles' => \App\Models\Role::all()
+            'roles' => \App\Models\Role::all(),
+            'branches' => \App\Models\Branch::all()
         ]);
     })->name('users.create');
 
     // Individual user pages
     Route::get('/{user}', function (\App\Models\User $user) {
         return Inertia::render('Users/Show', [
-            'user' => $user->load(['role'])
+            'user' => $user->load(['role', 'branch'])
         ]);
     })->name('users.show');
 
     Route::get('/{user}/edit', function (\App\Models\User $user) {
         return Inertia::render('Users/Edit', [
-            'user' => $user->load(['role']),
-            'roles' => \App\Models\Role::all()
+            'user' => $user->load(['role', 'branch']),
+            'roles' => \App\Models\Role::all(),
+            'branches' => \App\Models\Branch::all()
         ]);
     })->name('users.edit');
+    
+    // CRUD routes - ADD THESE ROUTES
+    Route::post('/', [UserController::class, 'store'])->name('users.store');
+    Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 // ============================================
