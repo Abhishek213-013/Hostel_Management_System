@@ -307,46 +307,61 @@
                                 
                                 <!-- Preview and Upload Area -->
                                 <div class="flex flex-col items-center space-y-4">
-                                    <!-- Preview -->
+                                    <!-- Preview with Default Avatar -->
                                     <div class="relative">
-                                        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-100 dark:border-blue-900/30">
+                                        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-100 dark:border-blue-900/30 bg-gray-100 dark:bg-gray-700">
                                             <img 
                                                 ref="profilePreview"
-                                                :src="profilePreviewUrl || '/default-avatar.png'" 
+                                                :src="profilePreviewUrl || defaultAvatar" 
                                                 alt="Profile Preview" 
                                                 class="w-full h-full object-cover"
                                                 @error="handlePreviewError"
                                             />
+                                            <!-- Default Avatar Overlay (only shows when no image is selected) -->
+                                            <div v-if="!profilePreviewUrl || profilePreviewUrl === defaultAvatar" 
+                                                 class="absolute inset-0 flex items-center justify-center bg-blue-50 dark:bg-blue-900/20">
+                                                <svg class="w-16 h-16 text-blue-400 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                </svg>
+                                            </div>
                                         </div>
+                                        <!-- Remove button (only shows when a custom image is selected) -->
                                         <button 
-                                            v-if="profilePreviewUrl && profilePreviewUrl !== '/default-avatar.png'" 
+                                            v-if="profilePreviewUrl && profilePreviewUrl !== defaultAvatar" 
                                             @click="removeProfilePicture"
                                             type="button"
-                                            class="absolute -top-2 -right-2 bg-red-500 dark:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 dark:hover:bg-red-700"
+                                            class="absolute -top-2 -right-2 bg-red-500 dark:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 dark:hover:bg-red-700 transition-colors shadow-md"
+                                            title="Remove photo"
                                         >
                                             ×
                                         </button>
                                     </div>
 
-                                    <!-- Upload Button -->
-                                    <div class="flex space-x-2">
-                                        <input 
-                                            type="file" 
-                                            ref="fileInput"
-                                            @change="handleFileSelect"
-                                            accept="image/*"
-                                            class="hidden"
-                                        >
-                                        <button 
-                                            type="button"
-                                            @click="$refs.fileInput.click()"
-                                            class="bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm flex items-center"
-                                        >
-                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                                            </svg>
-                                            Choose Image
-                                        </button>
+                                    <!-- Upload Button with Instruction -->
+                                    <div class="text-center space-y-3">
+                                        <div class="flex space-x-2 justify-center">
+                                            <input 
+                                                type="file" 
+                                                ref="fileInput"
+                                                @change="handleFileSelect"
+                                                accept="image/*"
+                                                class="hidden"
+                                            >
+                                            <button 
+                                                type="button"
+                                                @click="$refs.fileInput.click()"
+                                                class="bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm flex items-center transition-colors shadow-md hover:shadow-lg"
+                                            >
+                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                                                </svg>
+                                                Choose Image
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 max-w-xs">
+                                            Upload a square image (JPG, PNG, GIF). Max 2MB. 
+                                            <span class="block mt-1">Click "Choose Image" to upload and crop your photo.</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -487,46 +502,61 @@
                                 
                                 <!-- Preview and Upload Area -->
                                 <div class="flex flex-col items-center space-y-4">
-                                    <!-- Preview -->
+                                    <!-- Preview with Default Avatar -->
                                     <div class="relative">
-                                        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-100 dark:border-blue-900/30">
+                                        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-100 dark:border-blue-900/30 bg-gray-100 dark:bg-gray-700">
                                             <img 
                                                 ref="editProfilePreview"
-                                                :src="editProfilePreviewUrl || '/default-avatar.png'" 
+                                                :src="editProfilePreviewUrl || defaultAvatar" 
                                                 alt="Profile Preview" 
                                                 class="w-full h-full object-cover"
                                                 @error="handleEditPreviewError"
                                             />
+                                            <!-- Default Avatar Overlay (only shows when no image is selected) -->
+                                            <div v-if="!editProfilePreviewUrl || editProfilePreviewUrl === defaultAvatar" 
+                                                 class="absolute inset-0 flex items-center justify-center bg-blue-50 dark:bg-blue-900/20">
+                                                <svg class="w-16 h-16 text-blue-400 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                </svg>
+                                            </div>
                                         </div>
+                                        <!-- Remove button (only shows when a custom image is selected) -->
                                         <button 
-                                            v-if="editProfilePreviewUrl && editProfilePreviewUrl !== '/default-avatar.png'" 
+                                            v-if="editProfilePreviewUrl && editProfilePreviewUrl !== defaultAvatar" 
                                             @click="removeEditProfilePicture"
                                             type="button"
-                                            class="absolute -top-2 -right-2 bg-red-500 dark:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 dark:hover:bg-red-700"
+                                            class="absolute -top-2 -right-2 bg-red-500 dark:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 dark:hover:bg-red-700 transition-colors shadow-md"
+                                            title="Remove photo"
                                         >
                                             ×
                                         </button>
                                     </div>
 
-                                    <!-- Upload Button -->
-                                    <div class="flex space-x-2">
-                                        <input 
-                                            type="file" 
-                                            ref="editFileInput"
-                                            @change="handleEditFileSelect"
-                                            accept="image/*"
-                                            class="hidden"
-                                        >
-                                        <button 
-                                            type="button"
-                                            @click="$refs.editFileInput.click()"
-                                            class="bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm flex items-center"
-                                        >
-                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                                            </svg>
-                                            Choose Image
-                                        </button>
+                                    <!-- Upload Button with Instruction -->
+                                    <div class="text-center space-y-3">
+                                        <div class="flex space-x-2 justify-center">
+                                            <input 
+                                                type="file" 
+                                                ref="editFileInput"
+                                                @change="handleEditFileSelect"
+                                                accept="image/*"
+                                                class="hidden"
+                                            >
+                                            <button 
+                                                type="button"
+                                                @click="$refs.editFileInput.click()"
+                                                class="bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm flex items-center transition-colors shadow-md hover:shadow-lg"
+                                            >
+                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                                                </svg>
+                                                Choose Image
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 max-w-xs">
+                                            Upload a square image (JPG, PNG, GIF). Max 2MB. 
+                                            <span class="block mt-1">Click "Choose Image" to upload and crop your photo.</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -783,6 +813,9 @@ const props = defineProps({
     }
 })
 
+// Default avatar (SVG data URL for a human icon)
+const defaultAvatar = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzNhODJmNiI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg=='
+
 // Current date
 const currentDate = computed(() => {
     return new Date().toLocaleDateString('en-US', {
@@ -801,8 +834,8 @@ const searchQuery = ref('')
 const editingUser = ref(null)
 
 // Profile picture state
-const profilePreviewUrl = ref('')
-const editProfilePreviewUrl = ref('')
+const profilePreviewUrl = ref(defaultAvatar)
+const editProfilePreviewUrl = ref(defaultAvatar)
 const selectedFile = ref(null)
 const selectedEditFile = ref(null)
 const imageSrc = ref('')
@@ -879,7 +912,7 @@ const createSuperAdmin = () => {
         onSuccess: () => {
             closeModal()
             form.reset()
-            profilePreviewUrl.value = ''
+            profilePreviewUrl.value = defaultAvatar
         },
     })
 }
@@ -900,7 +933,7 @@ const editSuperAdmin = (user) => {
     if (user.profile_picture_url) {
         editProfilePreviewUrl.value = user.profile_picture_url
     } else {
-        editProfilePreviewUrl.value = ''
+        editProfilePreviewUrl.value = defaultAvatar
     }
     
     showEditModal.value = true
@@ -921,7 +954,7 @@ const updateSuperAdmin = () => {
         onSuccess: () => {
             closeEditModal()
             editForm.reset()
-            editProfilePreviewUrl.value = ''
+            editProfilePreviewUrl.value = defaultAvatar
         },
     })
 }
@@ -938,7 +971,7 @@ const closeModal = () => {
     showCreateModal.value = false
     form.reset()
     form.clearErrors()
-    profilePreviewUrl.value = ''
+    profilePreviewUrl.value = defaultAvatar
     selectedFile.value = null
 }
 
@@ -947,7 +980,7 @@ const closeEditModal = () => {
     editingUser.value = null
     editForm.reset()
     editForm.clearErrors()
-    editProfilePreviewUrl.value = ''
+    editProfilePreviewUrl.value = defaultAvatar
     selectedEditFile.value = null
 }
 
@@ -1040,7 +1073,7 @@ const handleEditFileSelect = (event) => {
 
 const removeProfilePicture = () => {
     selectedFile.value = null
-    profilePreviewUrl.value = '/default-avatar.png'
+    profilePreviewUrl.value = defaultAvatar
     form.profile_picture_data = null
     if (fileInput.value) {
         fileInput.value.value = '' // Reset file input
@@ -1049,7 +1082,7 @@ const removeProfilePicture = () => {
 
 const removeEditProfilePicture = () => {
     selectedEditFile.value = null
-    editProfilePreviewUrl.value = editingUser.value?.profile_picture_url || '/default-avatar.png'
+    editProfilePreviewUrl.value = editingUser.value?.profile_picture_url || defaultAvatar
     editForm.profile_picture_data = null
     if (editFileInput.value) {
         editFileInput.value.value = '' // Reset file input
@@ -1333,11 +1366,11 @@ const handleImageError = (event) => {
 }
 
 const handlePreviewError = (event) => {
-    event.target.src = '/default-avatar.png'
+    event.target.src = defaultAvatar
 }
 
 const handleEditPreviewError = (event) => {
-    event.target.src = '/default-avatar.png'
+    event.target.src = defaultAvatar
 }
 
 // Helper functions
@@ -1545,5 +1578,14 @@ const formatDate = (dateString) => {
 /* Image preview border for dark mode */
 .dark .border-4.border-blue-100 {
     border-color: rgba(30, 58, 138, 0.3);
+}
+
+/* Default avatar styling */
+.default-avatar-container {
+    background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+}
+
+.dark .default-avatar-container {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
 }
 </style>
