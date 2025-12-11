@@ -15,10 +15,12 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'dob', // Add this
         'address',
         'role_id',
-        'branch_id', // Add this
+        'branch_id',
         'created_id',
+        'profile_picture', // Add this
     ];
 
     protected $hidden = [
@@ -45,72 +47,41 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'created_id');
     }
 
-    // Add branch relationship
     public function branch()
     {
         return $this->belongsTo(Branch::class);
     }
 
-    // Existing relationships
-    public function branches()
+    // Existing relationships...
+    
+    // Get profile picture URL
+    public function getProfilePictureUrlAttribute()
     {
-        return $this->hasMany(Branch::class, 'created_id');
+        if ($this->profile_picture) {
+            return asset('storage/profile-pictures/' . $this->profile_picture);
+        }
+        return $this->getDefaultProfilePicture();
     }
-
-    public function floors()
+    
+    protected function getDefaultProfilePicture()
     {
-        return $this->hasMany(Floor::class, 'created_id');
+        // Create initials from name
+        $initials = $this->getInitialsFromName($this->name);
+        return "https://ui-avatars.com/api/?name={$initials}&background=3b82f6&color=ffffff&bold=true&size=128";
     }
-
-    public function rooms()
+    
+    protected function getInitialsFromName($name)
     {
-        return $this->hasMany(Room::class, 'created_id');
+        $words = explode(' ', $name);
+        $initials = '';
+        foreach ($words as $word) {
+            if (!empty($word)) {
+                $initials .= strtoupper($word[0]);
+            }
+        }
+        return substr($initials, 0, 2);
     }
-
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class, 'created_id');
-    }
-
-    public function beds()
-    {
-        return $this->hasMany(Bed::class, 'created_id');
-    }
-
-    public function admissions()
-    {
-        return $this->hasMany(Admission::class, 'created_id');
-    }
-
-    public function approvedAdmissions()
-    {
-        return $this->hasMany(Admission::class, 'approved_by_user');
-    }
-
-    public function boarders()
-    {
-        return $this->hasMany(Boarder::class, 'created_id');
-    }
-
-    public function createdBoarders()
-    {
-        return $this->hasMany(Boarder::class, 'created_by');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany(Payment::class, 'created_id');
-    }
-
-    public function attendanceLogs()
-    {
-        return $this->hasMany(AttendanceLog::class, 'created_id');
-    }
-
-    public function inventoryFloors()
-    {
-        return $this->hasMany(InventoryFloor::class, 'created_id');
-    }
+    
+    // Append the URL to the model
+    protected $appends = ['profile_picture_url'];
 }
-
-

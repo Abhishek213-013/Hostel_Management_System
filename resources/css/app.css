@@ -1,3 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Set Montserrat as the default font for sidebar */
+.font-montserrat {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Sidebar specific font settings */
+.sidebar-text {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 13.4px !important;
+}
+
+/* Smooth theme transitions */
+*,
+*::before,
+*::after {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.5);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.7);
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #212325;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+.dark ::-webkit-scrollbar-corner {
+    background: #212325;
+}
+
+/* Focus styles */
+:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.dark :focus-visible {
+    outline-color: #60a5fa;
+}
+
+/* Selection color */
+::selection {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.dark ::selection {
+    background-color: #60a5fa;
+    color: #111827;
+}
+
+/* Sidebar specific styles */
+.sidebar-light {
+    background-color: #0F173C !important;
+}
+
+.sidebar-dark {
+    background-color: #212325 !important;
+}
+
+.navbar-dark {
+    background-color: #212325 !important;
+}
+
+/* Main content background in dark mode */
+.dark .main-content-bg {
+    background-color: #212325 !important;
+}

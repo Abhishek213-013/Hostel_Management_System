@@ -1,4 +1,3 @@
-
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -8,6 +7,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Models\MainType; // Add this import
+use App\Models\CommonMainType; // Add this import
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -550,12 +551,12 @@ Route::prefix('settings')->middleware(['auth'])->group(function () {
         return Inertia::render('Settings/General');
     })->name('settings.general');
     
-    // Type Configuration Routes - REORGANIZED TO AVOID CONFLICTS
+    // Type Configuration Routes - REORGANIZED
     Route::prefix('types')->group(function () {
         // Main types index
         Route::get('/', [TypeConfigurationController::class, 'index'])->name('settings.types.index');
         
-        // Types for specific main type - MOVE THIS ABOVE SINGLE TYPE ROUTES
+        // Types for specific main type
         Route::get('/main-type/{id}', [TypeConfigurationController::class, 'show'])->name('settings.types.show');
         
         // Main type operations
@@ -564,15 +565,11 @@ Route::prefix('settings')->middleware(['auth'])->group(function () {
         Route::patch('/main/{id}/toggle-status', [TypeConfigurationController::class, 'toggleMainTypeStatus'])->name('settings.types.main.toggle-status');
         Route::delete('/main/{id}', [TypeConfigurationController::class, 'destroyMainType'])->name('settings.types.main.destroy');
         
-        // Type operations - THESE NEED TO COME AFTER SPECIFIC ROUTES
+        // Type operations
         Route::post('/', [TypeConfigurationController::class, 'storeType'])->name('settings.types.store');
-        Route::patch('/type/{id}', [TypeConfigurationController::class, 'updateType'])->name('settings.types.update'); // CHANGED FROM /{id}
-        Route::patch('/type/{id}/toggle-status', [TypeConfigurationController::class, 'toggleTypeStatus'])->name('settings.types.toggle-status'); // CHANGED FROM /{id}
-        Route::delete('/type/{id}', [TypeConfigurationController::class, 'destroyType'])->name('settings.types.destroy'); // CHANGED FROM /{id}
-        
-        // API endpoints
-        Route::get('/api/types/{id}', [TypeConfigurationController::class, 'getTypesByMainType']);
-        Route::post('/api/reorder', [TypeConfigurationController::class, 'reorderTypes']);
+        Route::patch('/type/{id}', [TypeConfigurationController::class, 'updateType'])->name('settings.types.update');
+        Route::patch('/type/{id}/toggle-status', [TypeConfigurationController::class, 'toggleTypeStatus'])->name('settings.types.toggle-status');
+        Route::delete('/type/{id}', [TypeConfigurationController::class, 'destroyType'])->name('settings.types.destroy');
     });
 });
 
@@ -664,7 +661,7 @@ Route::prefix('api')->middleware(['auth'])->group(function () {
         return response()->json($types);
     });
     
-    // Get all main types with their types
+    // Get all main types with their types - NEW ROUTE
     Route::get('/common-main-types', function () {
         $mainTypes = \App\Models\CommonMainType::with(['activeTypes'])
             ->where('status', true)
@@ -673,6 +670,19 @@ Route::prefix('api')->middleware(['auth'])->group(function () {
         
         return response()->json($mainTypes);
     });
+    
+    // Get active main types for sidebar - NEW ROUTE
+    Route::get('/main-types/active', function () {
+        $mainTypes = \App\Models\CommonMainType::where('status', true)
+            ->orderBy('position')
+            ->get(['id', 'name', 'slug', 'position']);
+        
+        return response()->json($mainTypes);
+    });
+    
+    // API endpoints for TypeConfigurationController
+    Route::get('/types/{id}', [TypeConfigurationController::class, 'getTypesByMainType']);
+    Route::post('/types/reorder', [TypeConfigurationController::class, 'reorderTypes']);
 });
 
 // ============================================
